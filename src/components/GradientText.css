@@ -1,0 +1,72 @@
+.animated-gradient-text {
+  position: relative;
+  display: flex;
+  max-width: fit-content;
+  margin: 0 auto;
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.5s ease-out;
+}
+
+.animated-gradient-text.with-border {
+  padding: 0.35rem 0.75rem;
+}
+
+.gradient-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: gradient-shift var(--gradient-duration, 8s) ease-in-out infinite alternate;
+}
+
+.gradient-overlay::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  content: '';
+  border-radius: inherit;
+  background-color: #120f17;
+  transform: translate(-50%, -50%);
+}
+
+.text-content {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient-shift var(--gradient-duration, 8s) ease-in-out infinite alternate;
+}
+
+.animated-gradient-text.pause-on-hover:hover .text-content,
+.animated-gradient-text.pause-on-hover:hover .gradient-overlay {
+  animation-play-state: paused;
+}
+
+@keyframes gradient-shift {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-content,
+  .gradient-overlay {
+    animation: none;
+  }
+}
